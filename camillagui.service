@@ -1,0 +1,11 @@
+[Unit]
+Description=CamillaDSP Backend and GUI
+After=default.target
+
+[Service]
+Type=idle
+User=kyle
+ExecStart=/opt/camillagui_backend/camillagui_backend
+
+[Install]
+WantedBy=default.target
