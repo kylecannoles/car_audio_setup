@@ -1,0 +1,236 @@
+description: null
+devices:
+  adjust_period: null
+  capture:
+    channels: 2
+    device: hw:Loopback,1,0
+    format: S32LE
+    labels: null
+    link_mute_control: null
+    link_volume_control: null
+    stop_on_inactive: null
+    type: Alsa
+  capture_samplerate: 48000
+  chunksize: 1024
+  enable_rate_adjust: null
+  multithreaded: null
+  playback:
+    channels: 8
+    device: hw:i2s8ch,0,0
+    format: S32LE
+    type: Alsa
+  queuelimit: null
+  rate_measure_interval: null
+  resampler:
+    profile: Balanced
+    type: AsyncSinc
+  samplerate: 48000
+  silence_threshold: null
+  silence_timeout: null
+  stop_on_rate_change: null
+  target_level: null
+  volume_limit: null
+  volume_ramp_time: null
+  worker_threads: null
+filters:
+  F_1:
+    description: null
+    parameters:
+      freq: 316
+      gain: -6.1
+      q: 2.457
+      type: Peaking
+    type: Biquad
+  F_2:
+    description: null
+    parameters:
+      freq: 372
+      gain: -1.9
+      q: 6
+      type: Peaking
+    type: Biquad
+  F_3:
+    description: null
+    parameters:
+      freq: 539
+      gain: -4.3
+      q: 4.68
+      type: Peaking
+    type: Biquad
+  F_4:
+    description: null
+    parameters:
+      freq: 958
+      gain: -10.8
+      q: 1
+      type: Peaking
+    type: Biquad
+  F_5:
+    description: null
+    parameters:
+      freq: 1779
+      gain: -5.8
+      q: 1.252
+      type: Peaking
+    type: Biquad
+  TW_1:
+    description: null
+    parameters:
+      freq: 14358
+      gain: -5.9
+      slope: 6
+      type: Lowshelf
+    type: Biquad
+  TW_2:
+    description: null
+    parameters:
+      freq: 2000
+      gain: -25
+      q: 1
+      type: Peaking
+    type: Biquad
+  TW_3:
+    description: null
+    parameters:
+      freq: 10000
+      gain: 5.4
+      q: 0.5
+      type: Peaking
+    type: Biquad
+  highpass:
+    description: null
+    parameters:
+      freq: 2000
+      type: HighpassFO
+    type: Biquad
+  lowpass:
+    description: null
+    parameters:
+      freq: 2000
+      type: LowpassFO
+    type: Biquad
+mixers:
+  2to8:
+    channels:
+      in: 2
+      out: 8
+    description: null
+    labels:
+    - FL
+    - FR
+    - SL
+    - SR
+    - TL
+    - TR
+    - RL
+    - RR
+    mapping:
+    - dest: 0
+      mute: false
+      sources:
+      - channel: 0
+        gain: 0
+        inverted: false
+        mute: false
+        scale: dB
+    - dest: 1
+      mute: false
+      sources:
+      - channel: 1
+        gain: 0
+        inverted: false
+        mute: false
+        scale: dB
+    - dest: 2
+      mute: false
+      sources:
+      - channel: 0
+        gain: 0
+        inverted: false
+        mute: false
+        scale: dB
+    - dest: 3
+      mute: false
+      sources:
+      - channel: 1
+        gain: 0
+        inverted: false
+        mute: false
+        scale: dB
+    - dest: 4
+      mute: false
+      sources:
+      - channel: 0
+        gain: 0
+        inverted: false
+        mute: false
+        scale: dB
+    - dest: 5
+      mute: false
+      sources:
+      - channel: 1
+        gain: 0
+        inverted: false
+        mute: false
+        scale: dB
+    - dest: 6
+      mute: false
+      sources:
+      - channel: 0
+        gain: 0
+        inverted: false
+        mute: false
+        scale: dB
+    - dest: 7
+      mute: false
+      sources:
+      - channel: 1
+        gain: 0
+        inverted: false
+        mute: false
+        scale: dB
+pipeline:
+- bypassed: null
+  description: null
+  name: 2to8
+  type: Mixer
+- bypassed: false
+  channels:
+  - 4
+  - 5
+  description: null
+  names:
+  - highpass
+  type: Filter
+- bypassed: false
+  channels:
+  - 0
+  - 1
+  description: null
+  names:
+  - lowpass
+  type: Filter
+- bypassed: null
+  channels:
+  - 0
+  - 1
+  description: null
+  names:
+  - F_1
+  - F_2
+  - F_3
+  - F_4
+  - F_5
+  type: Filter
+- bypassed: null
+  channels:
+  - 4
+  - 5
+  description: null
+  names:
+  - TW_1
+  - TW_2
+  - TW_3
+  type: Filter
+processors: {}
+title: null
