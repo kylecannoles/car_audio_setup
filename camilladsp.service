@@ -6,8 +6,10 @@ StartLimitBurst=10
 
 [Service]
 Type=simple
-User=kyle
+User=car
 WorkingDirectory=~
+TimeoutStartSec=10
+ExecStartPre=/bin/sleep 2
 ExecStart=camilladsp -o camilladsp/camilladsp.log -p 1234 -l error camilladsp/configs/default.yml
 Restart=always
 RestartSec=1
